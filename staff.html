@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Canteen Panel</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f4f4f4;
+      }
+
+      .box {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 800px;
+        margin: 30px auto;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .order {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+        background: #fafafa;
+      }
+
+      .order b {
+        color: #333;
+      }
+
+      button {
+        padding: 6px 12px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 5px;
+        background: #4caf50;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #45a049;
+      }
+
+      .logout-btn {
+        background: #e74c3c;
+        margin-top: 20px;
+      }
+
+      .logo {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .logo img {
+        height: 150px;
+        width: 150px;
+      }
+
+      .order span {
+        display: block;
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box" id="staff-panel">
+      <div class="logo">
+        <img src="./OSCM KRMU LOGO.png" alt="KRMU Logo" />
+      </div>
+      <h1>👨‍🍳Staff Dashboard</h1>
+      <hr>
+      <h2>📦All Orders</h2>
+      <div id="staff-orders">Loading orders...</div>
+
+      <a href="index.html"
+        ><button class="logout-btn" onclick="logout()">Logout</button></a
+      >
+    </div>
+
+    <script>
+      let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+      function loadStaffOrders() {
+        const staffDiv = document.getElementById("staff-orders");
+
+        if (orders.length === 0) {
+          staffDiv.innerHTML = "No orders yet.";
+          return;
+        }
+
+        staffDiv.innerHTML = orders
+          .map(
+            (o, idx) => `
+        <div class="order">
+          <b>Order ID:</b> ${o.id} <br/>
+          <b>Customer:</b> ${o.user} <br/>
+          <b>Total:</b> ₹${o.total} <br/>
+          <b>Items:</b> ${o.items
+            .map((i) => i.name + " x" + (i.quantity || 1))
+            .join(", ")} <br/>
+          <b>Status:</b> <span>${o.status}</span> <br/>
+          <button onclick="updateOrderStatus(${idx}, 'Ready ✅')">Mark Ready</button>
+          <button onclick="updateOrderStatus(${idx}, 'Delivered 🚚')">Mark Delivered</button>
+        </div>
+      `
+          )
+          .join("");
+      }
+
+      function updateOrderStatus(index, newStatus) {
+        orders[index].status = newStatus;
+        localStorage.setItem("orders", JSON.stringify(orders));
+        loadStaffOrders();
+      }
+
+      function logout() {
+        if (confirm("Are you sure you want to logout?")) {
+          window.location.reload();
+        }
+      }
+
+      window.onload = loadStaffOrders;
+    </script>
+  </body>
+</html>

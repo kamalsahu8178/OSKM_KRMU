@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Canteen Panel</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f4f4f4;
+      }
+
+      .box {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 700px;
+        margin: 30px auto;
+      }
+
+      h1,
+      h2 {
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      input {
+        margin: 8px;
+        padding: 8px;
+        width: 80%;
+        max-width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button {
+        padding: 8px 16px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 5px;
+        background: #4caf50;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #45a049;
+      }
+
+      .logout-btn {
+        background: #e74c3c;
+        margin-top: 20px;
+      }
+
+      .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #fafafa;
+      }
+
+      .logo {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .logo img {
+        height: 150px;
+        width: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box" id="admin-panel">
+      <div class="logo">
+      <img src="./OSCM KRMU LOGO.png" alt="KRMU Logo" />
+      </div>
+      <div class="header-text">
+      <h1>&#128199;Admin Dashboard</h1>
+      </div>
+      </div>
+      <h2>⚙Manage Menu</h2>
+      <form onsubmit="addMenuItem(event)">
+        <input type="text" id="itemName" placeholder="Item Name" required />
+        <input type="number" id="itemPrice" placeholder="Price (₹)" required />
+        <input type="number" id="itemStock" placeholder="Stock" required />
+        <button type="submit">Add Item</button>
+      </form>
+
+      <h3>📋Current Menu</h3>
+      <div id="admin-menu-list">Loading menu...</div>
+
+      <a href="index.html"
+        ><button class="logout-btn" onclick="logout()">Logout</button></a
+      >
+    </div>
+
+    <script>
+      let menu = JSON.parse(localStorage.getItem("menu")) || [];
+
+      function loadAdminMenu() {
+        const adminMenuList = document.getElementById("admin-menu-list");
+        if (menu.length === 0) {
+          adminMenuList.innerHTML = "No menu items yet.";
+          return;
+        }
+
+        adminMenuList.innerHTML = menu
+          .map(
+            (item, index) => `
+        <div class="item">
+          <span>${item.name} - ₹${item.price} (Stock: ${item.stock})</span>
+          <button onclick="removeMenuItem(${index})">Remove</button>
+        </div>
+      `
+          )
+          .join("");
+      }
+
+      function addMenuItem(event) {
+        event.preventDefault();
+        const name = document.getElementById("itemName").value.trim();
+        const price = parseInt(document.getElementById("itemPrice").value);
+        const stock = parseInt(document.getElementById("itemStock").value);
+
+        if (!name || isNaN(price) || isNaN(stock)) {
+          alert("Please fill all fields correctly.");
+          return;
+        }
+
+        const id = menu.length ? menu[menu.length - 1].id + 1 : 1;
+        menu.push({ id, name, price, stock });
+        localStorage.setItem("menu", JSON.stringify(menu));
+        loadAdminMenu();
+
+        // Clear form fields
+        document.getElementById("itemName").value = "";
+        document.getElementById("itemPrice").value = "";
+        document.getElementById("itemStock").value = "";
+      }
+
+      function removeMenuItem(index) {
+        if (confirm("Are you sure you want to remove this item?")) {
+          menu.splice(index, 1);
+          localStorage.setItem("menu", JSON.stringify(menu));
+          loadAdminMenu();
+        }
+      }
+
+      function logout() {
+        if (confirm("Are you sure you want to logout?")) {
+          window.location.reload();
+        }
+      }
+
+      window.onload = loadAdminMenu;
+    </script>
+  </body>
+</html>
