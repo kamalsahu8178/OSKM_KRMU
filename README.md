@@ -7,6 +7,7 @@ This project is a Canteen Management System developed to simplify and streamline
 The system provides a structured platform for طلاب (Students), Staff, and Admin, enabling efficient order placement, tracking, and management. It reduces waiting time, improves coordination, and enhances the overall user experience.
 
 👨‍🎓 Student Panel
+
 Users log in by entering their name and selecting their role
 Students can browse the canteen menu and select food items
 After placing an order, a mock QR code is generated for payment
