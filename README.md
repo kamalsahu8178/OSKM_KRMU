@@ -15,7 +15,9 @@ Students can track their order status in real-time:
 Preparing
 Ready
 Delivered
+
 👨‍🍳 Staff Panel
+
 Staff can view all incoming orders with details such as:
 Order ID
 Ordered items
@@ -25,15 +27,26 @@ Staff update order status after preparation:
 Ready
 Delivered
 Ensures smooth and efficient order handling
+
 🛠️ Admin Panel
+
 Admin has full control over system management
 Can add new food items to the menu
 Remove unavailable or out-of-stock items
 Maintains proper inventory and avoids confusion
+
 🎯 Objectives
+
 Reduce waiting time in canteens
 Improve order tracking and transparency
 Simplify communication between students and staff
 Provide an efficient and user-friendly system
+
 🏆 Achievement
+
 Successfully developed and presented at the Built and Beyond Hackathon
+
+🔗 Links
+
+🌐 Live Demo: https://your-live-link.com
+💻 GitHub Repository: https://github.com/your-username/your-repo
