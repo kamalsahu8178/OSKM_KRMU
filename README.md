@@ -49,6 +49,6 @@ Successfully developed and presented at the Built and Beyond Hackathon
 
 🔗 Links
 
-🌐 Live Demo: https://your-live-link.com
+🌐 Live Demo: https://kamalsahu8178.github.io/OSKM_KRMU/
 
 💻 GitHub Repository: https://github.com/your-username/your-repo
